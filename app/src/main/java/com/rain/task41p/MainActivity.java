@@ -78,15 +78,26 @@ public class MainActivity extends AppCompatActivity {
         binding.StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                restTimeEdit_value=binding.restTimeEdit.getText().toString();
+                period_value=binding.PeriodEdit.getText().toString();
+                String minutes_value=binding.TimeMin.getText().toString();
+                String seconds_value=binding.TimeSec.getText().toString();
 
+                if (!restTimeEdit_value.matches("\\d+")){
+                    restTimeEdit_value="0";
+                }
+                if(!period_value.matches("\\d+")){
+                    period_value="1";
+                }
                 minutes=Long.parseLong(binding.TimeMin.getText().toString());
                 seconds=Long.parseLong(binding.TimeSec.getText().toString());
                 totalTime =(minutes*60000)+(seconds*1000);
                 if(totalTime==0) return;
-                restTimeEdit_value=binding.restTimeEdit.getText().toString();
-                period_value=binding.PeriodEdit.getText().toString();
+
                 restTime=(Long.parseLong(restTimeEdit_value)*1000);
+                if (restTime<=0){restTime=0;}
                 period=Integer.parseInt(period_value);
+                if(period<=0){period=1;}
                 binding.restTimeEdit.setText("Rest Time is: "+restTimeEdit_value);
                 binding.PeriodEdit.setText("Period left: "+period_value);
                 enableChange(false);
